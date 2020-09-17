@@ -1,0 +1,22 @@
+﻿@using System.Reflection;
+<div class="card">
+    <div class="card-header">
+        @user.name
+    </div>
+    <div class="card-body">
+        @foreach (PropertyInfo prop in properties)
+        {
+            if (prop.Name != "name")
+            {
+                <p>@prop.Name : @prop.GetValue(user)</p>
+            }
+        }
+    </div>
+    </div>
+
+@code {
+    [CascadingParameter]
+    public User user { get; set; }
+
+    PropertyInfo[] properties = typeof(User).GetProperties();
+}

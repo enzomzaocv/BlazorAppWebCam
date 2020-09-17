@@ -1,0 +1,35 @@
+﻿@page "/people";
+@inject HttpClient http;
+<h1>People</h1>
+
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<div class="card-columns">
+    @foreach (var user in users)
+    {
+
+        <CascadingValue Value="@user">
+            <PeopleCard></PeopleCard>
+        </CascadingValue>
+    }
+</div>
+}
+
+@code {
+    private User[] users;
+
+    async Task getPeopleProfile()
+    {
+        users = await http.GetFromJsonAsync<User[]>("https://jsonplaceholder.typicode.com/users");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await getPeopleProfile();
+    }
+
+}

@@ -1,0 +1,30 @@
+﻿@page "/webcam";
+@using System.Drawing;
+@using System.IO;
+@inject IJSRuntime JsRuntime;
+
+<h1>WebCam2</h1>
+
+<div>
+    <video controls="controls" id="video" width="640" height="480">
+        @*<source src="file.mp4" type="video/mp4" />
+        <source src="file.webm" type="video/webm" />
+        <source src="file.ogv" type="video/ogg" />*@
+    </video>
+</div>
+<div>
+    <button type="button" class="btn btn-primary" @onclick="startVideo"></button>
+</div>
+
+@code {
+    async void showMessage()
+    {
+        bool comfirm = await JsRuntime.InvokeAsync<bool>("confirm", "estas seguro?");
+
+
+    }
+    async Task startVideo()
+    {
+        await JsRuntime.InvokeVoidAsync("startVideo");
+    }
+}
